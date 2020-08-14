@@ -9,7 +9,7 @@ from sklearn.model_selection import *
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
-loaded_date = []
+loaded_date = [];
 
 
 def load_data():
@@ -24,6 +24,7 @@ def load_data():
     vectorized.extend(clean_real_file)
     length.append(len(clean_real_file))
     vectorizer = CountVectorizer(analyzer='word')
+    
     vectorized = [x.strip() for x in vectorized]
     clean_fake = vectorizer.fit_transform(vectorized)
 
@@ -101,7 +102,7 @@ def select_knn_model(dataset):
 if __name__ == '__main__':
     print("Hello world")
     loaded_data = load_data()
-    # best = select_tree_model(loaded_data)
-    compute_information_gain(loaded_data)
-    select_knn_model(loaded_data)
+    ## best = select_tree_model(loaded_data)
+    #compute_information_gain(loaded_data)
+    #select_knn_model(loaded_data)
 
