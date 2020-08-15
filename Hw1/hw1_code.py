@@ -9,6 +9,11 @@ from sklearn.model_selection import *
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 import pandas as pd
+#import graphviz
+from sklearn import tree
+from io import BytesIO as StringIO
+
+
 loaded_date = [];
 
 
@@ -50,7 +55,7 @@ def select_tree_model(dataset):
         claf = DecisionTreeClassifier(max_depth=i, criterion="entropy")
         clafs.append(claf)
     accuracy_scores = []
-    print("Depth\tCriteria\tAccuracy\n############################################")
+    print("Depth\tCriteria\tAccuracy\n####################################################")
     for claf in clafs:
         claf.fit(dataset[0]["fake_train"], dataset[0]["real_train"])
         real_pred = claf.predict(dataset[0]["fake_val"])
@@ -62,8 +67,22 @@ def select_tree_model(dataset):
             clafs[max_accuracy_index].max_depth,
             clafs[max_accuracy_index].criterion,
             accuracy_scores[max_accuracy_index]))
+    
+    #dotfile= StringIO()
+    
+    #tree.export_graphviz(clafs[max_accuracy_index], out_file=dotfile) 
+    #(graph,) = pydot.graph_from_dot_data(dotfile.getvalue())
+    #graph.write_png("tree.png")
+    #graph = graphviz.Source(dot_data) 
+    #graph.render("iris") 
+    #print("VISUALIZING TREE")
+    
+    #print(tree.export_graphviz(
+    #    clafs[max_accuracy_index]
+    #))
 
     return clafs[max_accuracy_index]
+    
 
 def compute_information_gain(dataset):
     #I(Y|X) = H(Y) - H(Y|X)
@@ -102,7 +121,7 @@ def select_knn_model(dataset):
 if __name__ == '__main__':
     print("Hello world")
     loaded_data = load_data()
-    ## best = select_tree_model(loaded_data)
+    best = select_tree_model(loaded_data)
     #compute_information_gain(loaded_data)
     #select_knn_model(loaded_data)
 
